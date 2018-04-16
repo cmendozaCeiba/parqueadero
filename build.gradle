@@ -1,6 +1,7 @@
 
 // Apply the java-library plugin to add support for Java Library
 apply plugin: 'java-library'
+apply plugin: "jacoco"
 
 
 // In this section you declare where to find the dependencies of your project
@@ -13,3 +14,15 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 }
 
+test {
+    systemProperties 'property': 'value'
+    
+    jacoco {
+		append = false
+		destinationFile = file("jacoco/jacocoTest.exec")
+	}
+	
+	reports.junitXml.destination = file ("jacoco/test-results")
+}
+
+jacocoTestReport.dependsOn(test)
